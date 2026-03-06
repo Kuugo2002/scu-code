@@ -1,18 +1,18 @@
 #include<iostream>
 #include<vector>
+#include<map>
 using namespace std;
-void dfs(vector<int> &nums,int cur,int target,int sum,int& cnt){
-    if(sum==target){
-        cnt++;
-        return;
+int f(int target,int i,map<pair<int,int>,int>& memo,vector<int> &nums){
+    if(target==0) return 1;
+    if(target<0) return 0;
+    if(i<0&&target>0) return 0;
+    auto mit = memo.find({target,i});
+    if(mit!=memo.end()){
+        return mit->second;
     }
-    if(cur>=nums.size()||sum>target){
-        return;
-    }
-    // 算入加和
-    dfs(nums,cur+1,target,sum+nums[cur],cnt);
-    // 不算入加和
-    dfs(nums,cur+1,target,sum,cnt);
+    int res=f(target-nums[i],i-1,memo,nums)+f(target,i-1,memo,nums);
+    memo[{target,i}]=res;
+    return res;
 }
 int main(){
     int n;
@@ -24,7 +24,6 @@ int main(){
             nums.push_back(input);
         }
     }
-    int cnt=0;
-    dfs(nums,0,n,0,cnt);
-    cout<<cnt;
+    map<pair<int,int>,int> memo;
+    cout<<f(n,nums.size()-1,memo,nums);
 }
