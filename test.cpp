@@ -1,32 +1,28 @@
 #include<iostream>
 #include<vector>
-#include<map>
 using namespace std;
-map<pair<int,int>,int> memo;
-vector<int> nums={1,2};
-int f(int target,int i){
-    if(target==0) return 1;
-    if(target<0 || i<0 ) return 0;
-    // auto mit = memo.find({target,i});
-    // if(mit!=memo.end()){
-    //     return mit->second;
-    // }
-    if(memo.count({target,i})) return memo[{target,i}];
-    //int res=f(target-nums[i],i-1)+f(target,i-1);
-    int res = f(target,i-1);
-    if (target >= nums[i]) {
-        res += f(target-nums[i],i-1);
-    }
-    return memo[{target,i}]=res;
-}
 int main(){
-    int n;
-    cin>>n;
-    for(int i=1;nums[i]<n;i++){
-        int input=nums[i]+nums[i-1];
-        if(input<=n){
-            nums.push_back(input);
+    string str1,str2;
+    cin>>str1>>str2;
+    int n=str1.size();
+    int m=str2.size();
+    vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+    for(int j=0;j<m;j++){
+        dp[0][j]=j;
+    }
+    for(int i=0;i<n;i++){
+        dp[i][0]=i;
+    }
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            if(str1[i-1]==str2[j-1]){
+                dp[i][j]=dp[i-1][j-1];
+            }
+            else{
+                dp[i][j]=min(dp[i-1][j-1]+1,min(dp[i-1][j]+1,dp[i][j-1]+1));
+            }
         }
     }
-    cout<<f(n,nums.size()-1);
+    cout<<dp[n][m]<<endl;
+    return 0;
 }

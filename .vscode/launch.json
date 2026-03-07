@@ -32,7 +32,7 @@
       "request": "launch",
       "program": "${fileDirname}/build/${fileBasenameNoExtension}",
       "cwd": "${fileDirname}",
-      "externalConsole": true,
+      "externalConsole": false,
       "MIMode": "gdb",
       "miDebuggerArgs": "-q -ex quit; wait() { fg >/dev/null; }; /bin/gdb -q --interpreter=mi",
       "setupCommands": [
@@ -56,7 +56,7 @@
       "program": "${fileDirname}/build/${fileBasenameNoExtension}",
       "args": [],
       "cwd": "${fileDirname}",
-      "preLaunchTask": "C/C++: clang++ 生成活动文件",
+      "preLaunchTask": "C/C++: clang++ 生成活动文件"
     }
   ]
 }
