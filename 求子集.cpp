@@ -27,7 +27,7 @@ int main() {
     cout << "empty" << endl;
     for (auto it = result.begin(); it != result.end(); it++) {
         vector<int> temp = *it;
-        for (int j = 0; j < temp.size(); j++) {
+        for (size_t j = 0; j < temp.size(); j++) {
             if (j == 0) {
                 cout << temp[j];
             } else {
